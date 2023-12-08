@@ -24,8 +24,7 @@ const RegistrationPatientFormFields = [
 export default function RegisterPatient({
   registerPatient,
 }: RegisterPatientType) {
-  const { handleSubmit, control, onSubmit, isLoading, message } =
-    useRegisterPatient();
+  const { handleSubmit, control, onSubmit, isLoading } = useRegisterPatient();
 
   return (
     <Slide appear={true} direction="left" in={registerPatient}>
