@@ -37,9 +37,16 @@ def doctor_registration_code(self):
 class DoctorRegistrationCode(APIView):
     renderer_classes = [UserRenderer]
 
-    def get(self, request):
+    def post(self, request):
         token = uuid4()
         DoctorsToken.objects.create(token=token)
+
+        email_body = f"Hi..., Use the code below to register yourself.\nToken - {
+            token}"
+        data = {"email_body": email_body, "to_email": request.data.email,
+                "email_subject": "Verify your email"}
+
+        Util.send_email(data)
 
         return Response({"msg": "Code generated and sended successfully"}, status=status.HTTP_200_OK)
 

@@ -9,6 +9,7 @@ import { useAuth } from "../context/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserToken } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
+import { resizeAndConvertToBase64 } from "../utils/convertImage";
 
 interface RegistrationForm {
   user_name: string;
@@ -32,15 +33,26 @@ export const useRegisterDoctor = () => {
   });
   const [message, setMessage] = useState({ msg: "", error: false });
   const [registerUser, { isLoading }] = useRegisterUserMutation();
+  const [image, setImage] = useState("");
   const { storeToken } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const tokens = useSelector((state) => state.auth);
 
+  const handleImage = async (e) => {
+    const file = e.target.files[0];
+    try {
+      const base64 = await resizeAndConvertToBase64(file);
+      setImage(base64);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const onSubmit = async (data: RegistrationForm) => {
     let res = {};
     try {
-      const newData = { ...data, user_type: 2 };
+      const newData = { ...data, user_type: 2, profile_pic: image };
       res = await registerUser(newData);
 
       if (res.error) {
@@ -71,5 +83,5 @@ export const useRegisterDoctor = () => {
     }
   };
 
-  return { control, handleSubmit, isLoading, message, onSubmit };
+  return { control, handleSubmit, isLoading, message, onSubmit, handleImage };
 };

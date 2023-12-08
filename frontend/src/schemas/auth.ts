@@ -14,6 +14,8 @@ const state = Yup.string().required("State is required");
 
 const pincode = Yup.number().required("Pincode is required");
 
+const profile_pic = Yup.string().required("Profile Picture is required");
+
 const doctorRegistrationCode = Yup.string().required(
   "Doctor Registration Code is required"
 );
@@ -60,6 +62,7 @@ export const RegistrationSchemaDoctor = Yup.object().shape({
   city,
   state,
   pincode,
+  profile_pic,
   doctorRegistrationCode,
 });
 

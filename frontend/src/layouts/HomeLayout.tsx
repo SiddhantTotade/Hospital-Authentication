@@ -5,19 +5,18 @@ interface AuthLayoutProps {
   title?: string;
 }
 
-export default function AuthLayout({ title, children }: AuthLayoutProps) {
+export default function HomeLayout({ title, children }: AuthLayoutProps) {
   return (
     <Card
       sx={{
-        width: "40%",
+        width: "50%",
         top: "50%",
         left: "50%",
         transform: "translate(-50%, -50%)",
         position: "absolute",
         display: "grid",
         justifyItems: "center",
-        padding: "10px",
-        gap: "20px",
+        padding: "10px 10px",
         "@media(max-width:900px)": {
           width: "45%",
         },

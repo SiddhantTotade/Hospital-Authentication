@@ -12,44 +12,21 @@ import PrirmaryButton from "../../components/PrimaryButton";
 import AppLinks from "../../components/Links";
 import AppAlert from "../../components/Alerts";
 import { useLogin } from "../../hooks/login";
-import { useState } from "react";
 
 export default function LoginPage() {
   const { control, handleSubmit, isLoading, message, onSubmit } = useLogin();
-  const [loginUser, setLoginUser] = useState({
-    doctor: false,
-    patient: false,
-  });
 
   return (
     <>
       <AuthLayout title="Login">
-        {["Doctor", "Patient"].map((user, id) => (
-          <PrirmaryButton
-            key={id}
-            sx={{
-              display: loginUser.doctor || loginUser.patient ? "none" : "",
-            }}
-            label={`Login as ${user}`}
-            onClick={() => {
-              user === "Doctor"
-                ? setLoginUser({ ...loginUser, doctor: true })
-                : setLoginUser({ ...loginUser, patient: true });
-            }}
-          />
-        ))}
-        <Slide
-          appear={true}
-          direction="left"
-          in={loginUser.doctor || loginUser.patient}
-        >
+        <Slide appear={true} direction="left" in={true}>
           <FormControl
             component="form"
             fullWidth
             onSubmit={handleSubmit(onSubmit)}
             sx={{
               gap: "10px",
-              display: loginUser.patient || loginUser.doctor ? "grid" : "none",
+              display: "grid",
               justifyItems: "center",
             }}
           >
@@ -62,14 +39,6 @@ export default function LoginPage() {
                 name={field}
               />
             ))}
-            {loginUser.doctor && (
-              <InputField
-                type="text"
-                label="Doctor ID"
-                name="doctorID"
-                control={control}
-              />
-            )}
             {isLoading ? (
               <CircularProgress />
             ) : (
