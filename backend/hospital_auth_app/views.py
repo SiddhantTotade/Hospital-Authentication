@@ -1,16 +1,17 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
-from .serializers import *
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 from django.urls import reverse_lazy
-from .renderers import *
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
+from uuid import uuid4
 import jwt
 import environ
+from .serializers import *
+from .renderers import *
 
 env = environ.Env(
     # set casting, default value
@@ -28,12 +29,33 @@ def get_tokens_for_user(user):
     }
 
 
+def doctor_registration_code(self):
+    token = uuid4()
+    return Response({"token": token}, status=status.HTTP_200_OK)
+
+
+class DoctorRegistrationCode(APIView):
+    renderer_classes = [UserRenderer]
+
+    def get(self, request):
+        token = uuid4()
+        DoctorsToken.objects.create(token=token)
+
+        return Response({"msg": "Code generated and sended successfully"}, status=status.HTTP_200_OK)
+
+
 class UserRegistrationView(APIView):
     renderer_classes = [UserRenderer]
 
     def post(self, request, format=None):
         try:
-            serializer = UserRegistrationSerializer(data=request.data)
+            if request.data.get("doctor_registration_code"):
+                if DoctorsToken.objects.get(token=request.data.get("doctor_registration_code")):
+                    serializer = UserRegistrationSerializer(
+                        data=request.data)
+            else:
+                serializer = UserRegistrationSerializer(data=request.data)
+
             serializer.is_valid(raise_exception=True)
             serializer.save()
 

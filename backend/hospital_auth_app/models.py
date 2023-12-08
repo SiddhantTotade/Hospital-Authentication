@@ -47,3 +47,10 @@ class User(AbstractBaseUser):
     def is_staff(self):
         "Is the user a member of staff?"
         return self.is_admin
+
+
+class DoctorsToken(models.Model):
+    token = models.CharField(max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return self.token
