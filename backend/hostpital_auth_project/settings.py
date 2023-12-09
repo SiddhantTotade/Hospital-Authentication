@@ -35,7 +35,9 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".vercel.app", "127.0.0.1"]
+
+WSGI_APPLICATION = 'hospital_authentication.wsgi.app'
 
 AUTH_USER_MODEL = 'hospital_auth_app.User'
 
