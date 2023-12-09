@@ -107,7 +107,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "hospital_db",
         "USER": "Siddhant",
-        "PASSWORD": "#Coldplay1994",
+        "PASSWORD": env("DATABASE_PASSWORD"),
         "HOST": "127.0.0.1",
         "PORT": "3306",
         "OPTIONS": {
@@ -169,8 +169,6 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    # 'AUTH_HEADER_TYPES': 'Bearer',
-    # 'AUTH_HEADER_NAME': 'AUTHORIZATION',
     'USER_ID_FIELD': 'id',
     'USER_ID_CLAIM': 'user_id',
     'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
@@ -184,17 +182,11 @@ SIMPLE_JWT = {
 DJOSER = {
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
-    'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
     'SEND_CONFIRMATION_EMAIL': True,
     'SET_USERNAME_RETYPE': True,
     'SET_PASSWORD_RETYPE': True,
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
     'ACTIVATION_URL': 'activate/{uid}/{token}',
     'SEND_ACTIVATION_EMAIL': True,
-    'SOCIAL_AUTH_TOKEN_STRATEGY': 'djoser.social.token.jwt.TokenStrategy',
-    'SOCIAL_AUTH_ALLOWED_REDIRECT_URIS': ['http://localhost:5173'],
     'STATE_PARRAMETER': False,
 }
 

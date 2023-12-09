@@ -112,34 +112,6 @@ class VerifyEmailView(APIView):
             return Response({"error": "Invalid token"}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ResendVerifyEmailView(APIView):
-    renderer_classes = [UserRenderer]
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        try:
-            user = request.user
-
-            token = get_tokens_for_user(user)
-
-            relative_link = reverse_lazy("resend-email-verify")
-            abs_url = f"http://localhost:5173{
-                relative_link}?token={token['access']}"
-
-            email_body = f"Hi, {
-                user.first_name}. Use the link below to verify your email.\n{abs_url}"
-            data = {"email_body": email_body, "to_email": env("EMAIL_HOST_USER"),
-                    "email_subject": "Verify your email"}
-
-            Util.send_email(data)
-
-            return Response({'msg': 'Verification link has been sent to your email.'
-                             }, status=status.HTTP_201_CREATED)
-
-        except Exception as e:
-            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
 class UserLoginView(APIView):
     renderer_classes = [UserRenderer]
 
@@ -179,62 +151,6 @@ class UserProfileView(APIView):
         try:
             serializer = UserProfileSerializer(request.user)
             return Response(serializer.data, status=status.HTTP_200_OK)
-
-        except Exception as e:
-            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class UserChangePasswordView(APIView):
-    renderer_classes = [UserRenderer]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, format=None):
-        try:
-            serializer = UserChangePasswordSerializer(data=request.data,
-                                                      context={'user': request.user})
-
-            if serializer.is_valid():
-                return Response({'msg': 'Password Changed Successfully'}, status=status.HTTP_200_OK)
-            else:
-                return Response({'error': 'Invalid input data', 'details': serializer.errors},
-                                status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class SendPasswordResetEmailView(APIView):
-    renderer_classes = [UserRenderer]
-
-    def post(self, request, format=None):
-        try:
-            serializer = SendPasswordResetEmailSerializer(data=request.data)
-            print("hello")
-            if serializer.is_valid():
-                return Response({'msg': 'Password reset link sent to your email. Please check your email'}, status=status.HTTP_200_OK)
-            else:
-                return Response({'error': 'Invalid input data', 'details': serializer.errors},
-                                status=status.HTTP_400_BAD_REQUEST)
-
-        except Exception as e:
-            return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-
-class UserPasswordResetView(APIView):
-    renderer_classes = [UserRenderer]
-
-    def post(self, request, uid, token, format=None):
-        try:
-            if not uid or not token:
-                return Response({'error': 'Invalid UID or token'}, status=status.HTTP_400_BAD_REQUEST)
-
-            serializer = UserPasswordResetSerializer(
-                data=request.data, context={'uid': uid, 'token': token})
-
-            if serializer.is_valid():
-                return Response({'msg': 'Password reset successful'}, status=status.HTTP_200_OK)
-            else:
-                return Response({'error': 'Invalid input data', 'details': serializer.errors},
-                                status=status.HTTP_400_BAD_REQUEST)
 
         except Exception as e:
             return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
