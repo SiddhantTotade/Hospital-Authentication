@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const authApi = createApi({
   reducerPath: "userAuthAPI",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://127.0.0.1:8000/auth/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://hospital-authentication.vercel.app/auth/" }),
   endpoints: (builder) => ({
     registerUser: builder.mutation({
       query: (user) => {
