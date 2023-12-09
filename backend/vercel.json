@@ -1,0 +1,13 @@
+{
+    "builds": [{
+        "src": "hospital_auth_project/wsgi.py",
+        "use": "@ardnt/vercel-python-wsgi",
+        "config": { "maxLambdaSize": "15mb" }
+    }],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "hospital_auth_project/wsgi.py"
+        }
+    ]
+}
