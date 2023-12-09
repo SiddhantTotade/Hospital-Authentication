@@ -8,18 +8,12 @@ import PrirmaryButton from "../components/PrimaryButton";
 import withAuth from "../hocs/withAuth";
 import AppLoader from "../components/Loader";
 import { useLogout } from "../hooks/logout";
-import { useAuth } from "../context/AuthContext";
 import { useProfile } from "../hooks/profile";
-import { useResendVerificationEmail } from "../hooks/resendVerificationEmail";
-import AppAlert from "../components/Alerts";
 import UserDataTable from "../components/UserDataTable";
 import HomeLayout from "../layouts/HomeLayout";
 
 function HomePage() {
-  const { getToken } = useAuth();
   const { onSubmit, isLoading } = useLogout();
-  const { isVerifyLoading, message, resendVerifyEmail } =
-    useResendVerificationEmail();
   const userData = useSelector((state) => state?.user);
   const userType = localStorage.getItem("user_type");
   const navigate = useNavigate();
@@ -74,18 +68,6 @@ function HomePage() {
                 <CheckCircleOutlineIcon color="success" />
               )}
             </Typography>
-            {userData.is_verified !== true ? (
-              isVerifyLoading ? (
-                <CircularProgress />
-              ) : (
-                <PrirmaryButton
-                  label="Resend Verification Email"
-                  onClick={() => resendVerifyEmail(getToken().access)}
-                />
-              )
-            ) : (
-              ""
-            )}
             {userType !== "1" ? (
               ""
             ) : (
@@ -98,7 +80,6 @@ function HomePage() {
           </Box>
         </Box>
       </HomeLayout>
-      <AppAlert message={message} />
     </>
   );
 }

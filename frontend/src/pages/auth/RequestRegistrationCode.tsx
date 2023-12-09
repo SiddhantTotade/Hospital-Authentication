@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AuthLayout from "../../layouts/AuthLayout";
 import InputField from "../../components/Input";
 import PrirmaryButton from "../../components/PrimaryButton";
-import { useRequestRegistrationCode } from "../../hooks/resetPasswordEmail";
+import { useRequestRegistrationCode } from "../../hooks/requestRegistrationCode";
 import AppAlert from "../../components/Alerts";
 import { useEffect } from "react";
 
