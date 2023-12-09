@@ -28,17 +28,6 @@ export const authApi = createApi({
         };
       },
     }),
-    loginUserGoogle: builder.mutation({
-      query: (data) => {
-        return {
-          url: `o/google-oauth2/?state=${data.state}&code=${data.code}`,
-          method: "POST",
-          headers: {
-            "Content-type": "application/x-www-form-urlencoded",
-          },
-        };
-      },
-    }),
     getLoggedInUser: builder.query({
       query: (access_token) => {
         return {
@@ -58,59 +47,12 @@ export const authApi = createApi({
         };
       },
     }),
-    resendVerifyEmail: builder.query({
-      query: (access_token) => {
-        return {
-          url: "resend_email_verify/",
-          method: "GET",
-          headers: {
-            authorization: `Bearer ${access_token}`,
-          },
-        };
-      },
-    }),
-    changeUserPassword: builder.mutation({
-      query: ({ payload, access }) => {
-        return {
-          url: "change-password/",
-          method: "POST",
-          body: payload,
-          headers: {
-            authorization: `Bearer ${access}`,
-          },
-        };
-      },
-    }),
-    sendPasswordResetEmail: builder.mutation({
-      query: (user) => {
-        return {
-          url: "reset-password/",
-          method: "POST",
-          body: user,
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-      },
-    }),
     requestRegistrationCode: builder.mutation({
       query: (payload) => {
         return {
           url: "generate_token/",
           method: "POST",
           body: payload,
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
-      },
-    }),
-    resetPassword: builder.mutation({
-      query: ({ uid, token, password, password2 }) => {
-        return {
-          url: `reset-password/${uid}/${token}/`,
-          method: "POST",
-          body: { password, password2 },
           headers: {
             "Content-type": "application/json",
           },
@@ -135,13 +77,8 @@ export const authApi = createApi({
 export const {
   useRegisterUserMutation,
   useLoginUserMutation,
-  useLoginUserGoogleMutation,
   useGetLoggedInUserQuery,
-  useChangeUserPasswordMutation,
   useVerifyEmailQuery,
-  useLazyResendVerifyEmailQuery,
-  useSendPasswordResetEmailMutation,
-  useResetPasswordMutation,
   useRequestRegistrationCodeMutation,
   useLogoutMutation,
 } = authApi;
