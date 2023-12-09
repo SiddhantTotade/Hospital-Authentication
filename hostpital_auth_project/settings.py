@@ -14,6 +14,7 @@ from datetime import timedelta
 from pathlib import Path
 
 import os
+import dj_database_url
 import environ
 
 env = environ.Env(
@@ -35,7 +36,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".vercel.app", "127.0.0.1"]
+ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
 
 AUTH_USER_MODEL = 'hospital_auth_app.User'
 
@@ -99,23 +100,24 @@ WSGI_APPLICATION = "hostpital_auth_project.wsgi.app"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.sqlite3",
-    #     "NAME": BASE_DIR / "db.sqlite3",
-    # }
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "hospital_db",
-        "USER": "Siddhant",
-        "PASSWORD": env("DATABASE_PASSWORD"),
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
-        "OPTIONS": {
-            "sql_mode": "traditional",
-        }
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
+    # "default": {
+    #     "ENGINE": "django.db.backends.mysql",
+    #     "NAME": "hospital_db",
+    #     "USER": "Siddhant",
+    #     "PASSWORD": env("DATABASE_PASSWORD"),
+    #     "HOST": "127.0.0.1",
+    #     "PORT": "3306",
+    #     "OPTIONS": {
+    #         "sql_mode": "traditional",
+    #     }
+    # }
 }
 
+DATABASES["default"] = dj_database_url.parse(env("DATABASE_URL"))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -151,10 +153,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 STATIC_URL = "static/"
 
-MEDIA_URL = "/profile_pic/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "profile_pic/")
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
