@@ -93,7 +93,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "hostpital_auth_project.wsgi.app"
+WSGI_APPLICATION = "hostpital_auth_project.wsgi.application"
 
 
 # Database
