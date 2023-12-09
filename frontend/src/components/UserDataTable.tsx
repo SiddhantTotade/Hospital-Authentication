@@ -18,7 +18,7 @@ export default function UserDataTable() {
   );
 
   return (
-    <TableContainer sx={{ width: "50%" }}>
+    <TableContainer sx={{ width: "60%" }}>
       <Table>
         <TableBody>
           {keysToShow.map((key) => (

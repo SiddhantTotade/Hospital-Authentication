@@ -29,11 +29,6 @@ def get_tokens_for_user(user):
     }
 
 
-def doctor_registration_code(self):
-    token = uuid4()
-    return Response({"token": token}, status=status.HTTP_200_OK)
-
-
 class DoctorRegistrationCode(APIView):
     renderer_classes = [UserRenderer]
 
@@ -43,8 +38,8 @@ class DoctorRegistrationCode(APIView):
 
         email_body = f"Hi..., Use the code below to register yourself.\nToken - {
             token}"
-        data = {"email_body": email_body, "to_email": request.data.email,
-                "email_subject": "Verify your email"}
+        data = {"email_body": email_body, "to_email": request.data["email"],
+                "email_subject": "Registration Code"}
 
         Util.send_email(data)
 
@@ -56,8 +51,10 @@ class UserRegistrationView(APIView):
 
     def post(self, request, format=None):
         try:
-            if request.data.get("doctor_registration_code"):
-                if DoctorsToken.objects.get(token=request.data.get("doctor_registration_code")):
+            if request.data.get("doctorRegistrationCode"):
+                if DoctorsToken.objects.get(token=request.data.get("doctorRegistrationCode")):
+                    DoctorsToken.objects.get(
+                        token=request.data.get("doctorRegistrationCode")).delete()
                     serializer = UserRegistrationSerializer(
                         data=request.data)
             else:

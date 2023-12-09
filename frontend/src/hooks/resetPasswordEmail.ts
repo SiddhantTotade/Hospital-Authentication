@@ -3,27 +3,27 @@ import { useForm } from "react-hook-form";
 import { InferType } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useResetPasswordEmailMutation } from "../services/authApiService";
-import { ResetPasswordEmailSchema } from "../schemas/auth";
+import { useRequestRegistrationCodeMutation } from "../services/authApiService";
+import { RequestRegistrationCodeSchema } from "../schemas/auth";
 
-interface ResetPasswordEmailForm {
+interface RequestRegistrationCodeForm {
   email: string;
 }
 
-type ResetPassworrdSchemaType = InferType<typeof ResetPasswordEmailSchema>;
+type ResetPassworrdSchemaType = InferType<typeof RequestRegistrationCodeSchema>;
 
-export const useResetPasswordEmail = () => {
+export const useRequestRegistrationCode = () => {
   const { control, handleSubmit, reset } = useForm<ResetPassworrdSchemaType>({
-    resolver: yupResolver(ResetPasswordEmailSchema),
+    resolver: yupResolver(RequestRegistrationCodeSchema),
   });
   const [message, setMessage] = useState({ msg: "", error: false });
-  const [resetPasswordEmail, { isLoading }] = useResetPasswordEmailMutation();
+  const [requestCode, { isLoading }] = useRequestRegistrationCodeMutation();
 
-  const onSubmit = async (data: ResetPasswordEmailForm) => {
+  const onSubmit = async (data: RequestRegistrationCodeForm) => {
     let res = {};
-    
+
     try {
-      res = await resetPasswordEmail(data);
+      res = await requestCode(data);
 
       if (res.error) {
         setMessage({

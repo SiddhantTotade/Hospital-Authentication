@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { CircularProgress, Typography, Box, Avatar } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import { useNavigate } from "react-router-dom";
 
 import PrirmaryButton from "../components/PrimaryButton";
 import withAuth from "../hocs/withAuth";
@@ -19,7 +20,9 @@ function HomePage() {
   const { onSubmit, isLoading } = useLogout();
   const { isVerifyLoading, message, resendVerifyEmail } =
     useResendVerificationEmail();
-  const userData = useSelector((state) => state.user);
+  const userData = useSelector((state) => state?.user);
+  const userType = localStorage.getItem("user_type");
+  const navigate = useNavigate();
 
   useProfile();
 
@@ -50,7 +53,7 @@ function HomePage() {
                 alignItems: "center",
               }}
             >
-              {userData.user_type === 2 ? (
+              {userType === "2" ? (
                 <Typography>
                   Welcome, Dr. {userData.first_name + " " + userData.last_name}
                 </Typography>
@@ -82,6 +85,14 @@ function HomePage() {
               )
             ) : (
               ""
+            )}
+            {userType !== "1" ? (
+              ""
+            ) : (
+              <PrirmaryButton
+                label="Doctor Registration Code"
+                onClick={() => navigate("/auth/request_code")}
+              />
             )}
             <PrirmaryButton label="Logout" onClick={onSubmit} />
           </Box>

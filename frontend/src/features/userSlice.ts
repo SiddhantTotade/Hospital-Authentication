@@ -30,6 +30,7 @@ export const userSlice = createSlice({
       state.user_type = action.payload.user_type;
       state.profile_pic = action.payload.profile_pic;
       state.is_verified = action.payload.is_verified;
+      localStorage.setItem("user_type", action.payload.user_type);
     },
     unsetUserInfo: (state) => {
       state.user_name = initialState.user_name;
@@ -43,6 +44,7 @@ export const userSlice = createSlice({
       state.profile_pic = initialState.profile_pic;
       state.user_type = initialState.user_type;
       state.is_verified = initialState.is_verified;
+      localStorage.removeItem("user_type");
     },
   },
 });

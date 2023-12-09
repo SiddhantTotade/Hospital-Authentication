@@ -7,7 +7,7 @@ import {
 import LoginPage from "../pages/auth/Login";
 import RegisterPage from "../pages/auth/Register";
 import ChangePasswordPage from "../pages/auth/ChangePassword";
-import ForgotPasswordPage from "../pages/auth/ForgotPassword";
+import RequestRegistrationCodePage from "../pages/auth/RequestRegistrationCode";
 import ResetPasswordPage from "../pages/auth/ResetPassword";
 import EmailVerificationPage from "../pages/auth/EmailVerification";
 import HomeWithAuth from "../pages/Home";
@@ -28,8 +28,8 @@ const authRoutes: Route = [
     element: <ChangePasswordPage />,
   },
   {
-    path: "/auth/forgot/password",
-    element: <ForgotPasswordPage />,
+    path: "/auth/request_code/",
+    element: <RequestRegistrationCodePage />,
   },
   {
     path: "/auth/email_verify",

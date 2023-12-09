@@ -1,19 +1,27 @@
-import { FormControl } from "@mui/material";
+import { FormControl, CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import AuthLayout from "../../layouts/AuthLayout";
 import InputField from "../../components/Input";
 import PrirmaryButton from "../../components/PrimaryButton";
-import { useResetPasswordEmail } from "../../hooks/resetPasswordEmail";
-import AppLoader from "../../components/Loader";
+import { useRequestRegistrationCode } from "../../hooks/resetPasswordEmail";
 import AppAlert from "../../components/Alerts";
+import { useEffect } from "react";
 
-export default function ForgotPasswordPage() {
+export default function RequestRegistrationCodePage() {
   const { handleSubmit, control, message, isLoading, onSubmit } =
-    useResetPasswordEmail();
+    useRequestRegistrationCode();
+  const navigate = useNavigate();
+  const userType = localStorage.getItem("user_type");
+
+  useEffect(() => {
+    if (userType !== "1") {
+      navigate("/auth/login");
+    }
+  }, []);
 
   return (
     <>
-      {isLoading && <AppLoader />}
       <AuthLayout title="Reset Password">
         <FormControl
           component="form"
@@ -27,7 +35,11 @@ export default function ForgotPasswordPage() {
             control={control}
             name="email"
           />
-          <PrirmaryButton type="submit" label="Send " />
+          {isLoading ? (
+            <CircularProgress />
+          ) : (
+            <PrirmaryButton type="submit" label="Send" />
+          )}
         </FormControl>
       </AuthLayout>
       <AppAlert message={message} />

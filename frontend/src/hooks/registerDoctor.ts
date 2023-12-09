@@ -11,7 +11,7 @@ import { setUserToken } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
 import { resizeAndConvertToBase64 } from "../utils/convertImage";
 
-interface RegistrationForm {
+interface RegistrationDoctorForm {
   user_name: string;
   first_name: string;
   last_name: string;
@@ -22,7 +22,6 @@ interface RegistrationForm {
   city: string;
   state: string;
   pincode: number;
-  doctorRegistrationCode: string;
 }
 
 type RegistrationSchemaType = InferType<typeof RegistrationSchemaDoctor>;
@@ -31,7 +30,7 @@ export const useRegisterDoctor = () => {
   const { control, handleSubmit, reset } = useForm<RegistrationSchemaType>({
     resolver: yupResolver(RegistrationSchemaDoctor),
   });
-  const [message, setMessage] = useState({ msg: "", error: false });
+  const [messageDoctor, setMessageDoctor] = useState({ msg: "", error: false });
   const [registerUser, { isLoading }] = useRegisterUserMutation();
   const [image, setImage] = useState("");
   const { storeToken } = useAuth();
@@ -49,15 +48,16 @@ export const useRegisterDoctor = () => {
     }
   };
 
-  const onSubmit = async (data: RegistrationForm) => {
+  const onSubmit = async (data: RegistrationDoctorForm) => {
     let res = {};
+
     try {
       const newData = { ...data, user_type: 2, profile_pic: image };
       res = await registerUser(newData);
 
       if (res.error) {
-        setMessage({
-          ...message,
+        setMessageDoctor({
+          ...messageDoctor,
           msg: res.error.data.non_field_errors[0],
           error: true,
         });
@@ -67,14 +67,14 @@ export const useRegisterDoctor = () => {
         dispatch(
           setUserToken({ access: tokens.access, refresh: tokens.refresh })
         );
-        setMessage({ ...message, msg: res.data.msg, error: false });
+        setMessageDoctor({ ...messageDoctor, msg: res.data.msg, error: false });
         setTimeout(() => {
           navigate("/");
         }, 6000);
       }
     } catch (error) {
-      setMessage({
-        ...message,
+      setMessageDoctor({
+        ...messageDoctor,
         msg: res.error.data.non_field_errors[0],
         error: true,
       });
@@ -83,5 +83,12 @@ export const useRegisterDoctor = () => {
     }
   };
 
-  return { control, handleSubmit, isLoading, message, onSubmit, handleImage };
+  return {
+    control,
+    handleSubmit,
+    isLoading,
+    messageDoctor,
+    onSubmit,
+    handleImage,
+  };
 };

@@ -30,7 +30,10 @@ export const useRegisterPatient = () => {
   const { control, handleSubmit, reset } = useForm<RegistrationSchemaType>({
     resolver: yupResolver(RegistrationSchemaPatient),
   });
-  const [message, setMessage] = useState({ msg: "", error: false });
+  const [messagePatient, setMessagePatient] = useState({
+    msg: "",
+    error: false,
+  });
   const [registerUser, { isLoading }] = useRegisterUserMutation();
   const [image, setImage] = useState("");
   const { storeToken } = useAuth();
@@ -56,8 +59,8 @@ export const useRegisterPatient = () => {
       res = await registerUser(newData);
 
       if (res.error) {
-        setMessage({
-          ...message,
+        setMessagePatient({
+          ...messagePatient,
           msg: res.error.data.non_field_errors[0],
           error: true,
         });
@@ -67,14 +70,18 @@ export const useRegisterPatient = () => {
         dispatch(
           setUserToken({ access: tokens.access, refresh: tokens.refresh })
         );
-        setMessage({ ...message, msg: res.data.msg, error: false });
+        setMessagePatient({
+          ...messagePatient,
+          msg: res.data.msg,
+          error: false,
+        });
         setTimeout(() => {
           navigate("/");
         }, 6000);
       }
     } catch (error) {
-      setMessage({
-        ...message,
+      setMessagePatient({
+        ...messagePatient,
         msg: res.error.data.non_field_errors[0],
         error: true,
       });
@@ -83,5 +90,12 @@ export const useRegisterPatient = () => {
     }
   };
 
-  return { control, handleSubmit, isLoading, message, onSubmit, handleImage };
+  return {
+    control,
+    handleSubmit,
+    isLoading,
+    messagePatient,
+    onSubmit,
+    handleImage,
+  };
 };

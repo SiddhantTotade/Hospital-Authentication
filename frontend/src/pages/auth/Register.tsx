@@ -6,6 +6,9 @@ import PrirmaryButton from "../../components/PrimaryButton";
 import AppLinks from "../../components/Links";
 import RegisterPatient from "../../components/RegisterPatient";
 import RegisterDoctor from "../../components/RegisterDoctor";
+import { useRegisterDoctor } from "../../hooks/registerDoctor";
+import { useRegisterPatient } from "../../hooks/registerPatient";
+import AppAlert from "../../components/Alerts";
 
 export default function RegisterPage() {
   const [registerUser, setRegisterUser] = useState({
@@ -33,8 +36,8 @@ export default function RegisterPage() {
             />
           ))}
         </Box>
-        <RegisterPatient registerPatient={registerUser.patient} />
         <RegisterDoctor registerDoctor={registerUser.doctor} />
+        <RegisterPatient registerPatient={registerUser.patient} />
         <Typography>
           Already a user ? <AppLinks href="/auth/login">Login</AppLinks>
         </Typography>

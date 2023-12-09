@@ -93,10 +93,10 @@ export const authApi = createApi({
         };
       },
     }),
-    resetPasswordEmail: builder.mutation({
+    requestRegistrationCode: builder.mutation({
       query: (payload) => {
         return {
-          url: "reset-password/",
+          url: "generate_token/",
           method: "POST",
           body: payload,
           headers: {
@@ -142,6 +142,6 @@ export const {
   useLazyResendVerifyEmailQuery,
   useSendPasswordResetEmailMutation,
   useResetPasswordMutation,
-  useResetPasswordEmailMutation,
+  useRequestRegistrationCodeMutation,
   useLogoutMutation,
 } = authApi;
