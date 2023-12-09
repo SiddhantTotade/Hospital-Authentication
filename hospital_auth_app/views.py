@@ -36,8 +36,7 @@ class DoctorRegistrationCode(APIView):
         token = uuid4()
         DoctorsToken.objects.create(token=token)
 
-        email_body = f"Hi..., Use the code below to register yourself.\nToken - {
-            token}"
+        email_body = f"Hi..., Use the code below to register yourself.\nToken - {token}"
         data = {"email_body": email_body, "to_email": request.data["email"],
                 "email_subject": "Registration Code"}
 
@@ -74,11 +73,9 @@ class UserRegistrationView(APIView):
             token = get_tokens_for_user(user)
 
             relative_link = reverse_lazy("email-verify")
-            abs_url = f"http://localhost:5173{
-                relative_link}?token={token['access']}"
+            abs_url = f"http://localhost:5173{relative_link}?token={token['access']}"
 
-            email_body = f"Hi, {
-                user.first_name}. Use the link below to verify your email.\n{abs_url}"
+            email_body = f"Hi, {user.first_name}. Use the link below to verify your email.\n {abs_url}"
             data = {"email_body": email_body, "to_email": user_email,
                     "email_subject": "Verify your email"}
 
