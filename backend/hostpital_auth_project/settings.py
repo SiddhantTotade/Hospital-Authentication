@@ -37,8 +37,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = [".vercel.app", "127.0.0.1"]
 
-WSGI_APPLICATION = 'hospital_authentication.wsgi.app'
-
 AUTH_USER_MODEL = 'hospital_auth_app.User'
 
 # Application definition
@@ -94,7 +92,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "hostpital_auth_project.wsgi.application"
+WSGI_APPLICATION = "hostpital_auth_project.wsgi.app"
 
 
 # Database
