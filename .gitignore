@@ -1,5 +1,5 @@
 venv
-backend/.env
-backend/hospital_auth_app/__pycache__
-backend/hospital_auth_app/migrations
-backend/hospital_auth_project/__pycache__
+/.env
+hospital_auth_app/__pycache__
+hospital_auth_app/migrations
+hospital_auth_project/__pycache__
