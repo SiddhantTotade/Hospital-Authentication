@@ -31,7 +31,7 @@ export const useRegisterPatient = () => {
     resolver: yupResolver(RegistrationSchemaPatient),
   });
   const [messagePatient, setMessagePatient] = useState({
-    msg: "",
+    msg: undefined,
     error: false,
   });
   const [registerUser, { isLoading }] = useRegisterUserMutation();
@@ -39,40 +39,42 @@ export const useRegisterPatient = () => {
   const { storeToken } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const tokens = useSelector((state) => state.auth);
+  const tokens = useSelector(
+    (state: { auth: { [key: string]: string } }) => state.auth
+  );
 
-  const handleImage = async (e) => {
-    const file = e.target.files[0];
+  const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     try {
       const base64 = await resizeAndConvertToBase64(file);
-      setImage(base64);
+      setImage(base64 as string);
     } catch (error) {
       console.log(error);
     }
   };
 
   const onSubmit = async (data: RegistrationPatientForm) => {
-    let res = {};
+    let res: { data?: { token: string; msg: string }; error?: any } = {};
 
     try {
       const newData = { ...data, user_type: 3, profile_pic: image };
       res = await registerUser(newData);
 
-      if (res.error) {
+      if ("error" in res) {
         setMessagePatient({
           ...messagePatient,
-          msg: res.error.data.non_field_errors[0],
+          msg: res.error?.data?.non_field_errors[0],
           error: true,
         });
       }
-      if (res.data) {
-        storeToken(res.data.token);
+      if ("data" in res) {
+        storeToken(res.data?.token);
         dispatch(
           setUserToken({ access: tokens.access, refresh: tokens.refresh })
         );
         setMessagePatient({
           ...messagePatient,
-          msg: res.data.msg,
+          msg: res.data?.msg,
           error: false,
         });
         setTimeout(() => {
@@ -82,7 +84,7 @@ export const useRegisterPatient = () => {
     } catch (error) {
       setMessagePatient({
         ...messagePatient,
-        msg: res.error.data.non_field_errors[0],
+        msg: res.error?.data?.non_field_errors[0] || "An error occured",
         error: true,
       });
     } finally {

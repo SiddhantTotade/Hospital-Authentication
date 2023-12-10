@@ -67,7 +67,6 @@ export default function RegisterDoctor({ registerDoctor }: RegisterDoctorType) {
                       ? "email"
                       : "password"
                   }
-                  size="small"
                   label={field}
                   control={control}
                   name={
@@ -98,7 +97,6 @@ export default function RegisterDoctor({ registerDoctor }: RegisterDoctorType) {
                       ? "file"
                       : "text"
                   }
-                  size="small"
                   label={field}
                   control={control}
                   name={
@@ -109,12 +107,7 @@ export default function RegisterDoctor({ registerDoctor }: RegisterDoctorType) {
                   }
                 />
               ))}
-              <TextField
-                fullWidth
-                size="small"
-                type="file"
-                onChange={handleImage}
-              />
+              <TextField fullWidth type="file" onChange={handleImage} />
             </Box>
           </Box>
           {isLoading ? (

@@ -48,7 +48,7 @@ export const resizeAndConvertToBase64 = (file) => {
         reject(error);
       };
 
-      img.src = event.target.result;
+      img.src = event.target.result as string;
     };
 
     reader.onerror = (error) => {

@@ -11,7 +11,7 @@ const initialState = {
   pincode: "",
   user_type: "",
   profile_pic: "",
-  is_verified: "",
+  is_verified: null,
 };
 
 export const userSlice = createSlice({

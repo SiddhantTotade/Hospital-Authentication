@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { CircularProgress, Typography, Box, Avatar } from "@mui/material";
+import { Typography, Box, Avatar } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ import HomeLayout from "../layouts/HomeLayout";
 
 function HomePage() {
   const { onSubmit, isLoading } = useLogout();
-  const userData = useSelector((state) => state?.user);
+  const userData = useSelector((state) => state["user"]);
   const userType = localStorage.getItem("user_type");
   const navigate = useNavigate();
 

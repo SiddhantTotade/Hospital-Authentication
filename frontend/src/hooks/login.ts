@@ -26,23 +26,25 @@ export const useLogin = () => {
   const { storeToken } = useAuth();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const tokens = useSelector((state) => state.auth);
+  const tokens = useSelector(
+    (state: { auth: { [key: string]: string } }) => state.auth
+  );
 
   const onSubmit = async (data: LoginForm) => {
-    let res = {};
+    let res: { data?: { token: string }; error?: any } = {};
 
     try {
       res = await loginUser(data);
 
-      if (res.error) {
+      if ("error" in res) {
         setMessage({
           ...message,
-          msg: res.error.data.error.non_field_errors[0],
+          msg: res.error?.data?.error?.non_field_errors?.[0],
           error: true,
         });
       }
-      if (res.data) {
-        storeToken(res.data.token);
+      if ("data" in res) {
+        storeToken(res.data?.token);
         dispatch(
           setUserToken({ access: tokens.access, refresh: tokens.refresh })
         );
@@ -51,7 +53,7 @@ export const useLogin = () => {
     } catch (error) {
       setMessage({
         ...message,
-        msg: res.error.data.errors.non_field_errors[0],
+        msg: res.error?.data?.errors?.non_field_errors[0],
         error: true,
       });
     } finally {

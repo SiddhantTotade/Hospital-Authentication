@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 
 const excludedKeys = ["profile_pic", "user_type", "is_verified"];
 
-const capitalizeFirstLetter = (str) => {
+const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
 export default function UserDataTable() {
-  const userData = useSelector((state) => state.user);
+  const userData = useSelector(
+    (state: { user: { [key: string]: string } }) => state.user
+  );
   const keysToShow = Object.keys(userData).filter(
     (key) => !excludedKeys.includes(key)
   );

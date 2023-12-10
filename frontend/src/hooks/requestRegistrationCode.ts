@@ -20,7 +20,7 @@ export const useRequestRegistrationCode = () => {
   const [requestCode, { isLoading }] = useRequestRegistrationCodeMutation();
 
   const onSubmit = async (data: RequestRegistrationCodeForm) => {
-    let res = {};
+    let res: { data?: { token: string; msg: string }; error?: any } = {};
 
     try {
       res = await requestCode(data);

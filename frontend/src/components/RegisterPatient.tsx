@@ -63,7 +63,6 @@ export default function RegisterPatient({
                       ? "email"
                       : "password"
                   }
-                  size="small"
                   label={field}
                   control={control}
                   name={
@@ -94,7 +93,6 @@ export default function RegisterPatient({
                       ? "file"
                       : "email"
                   }
-                  size="small"
                   label={field}
                   control={control}
                   name={
@@ -107,16 +105,15 @@ export default function RegisterPatient({
                   }
                 />
               ))}
-              <TextField
-                fullWidth
-                size="small"
-                type="file"
-                onChange={handleImage}
-              />
+              <TextField fullWidth type="file" onChange={handleImage} />
               {isLoading ? (
                 <CircularProgress />
               ) : (
-                <PrirmaryButton type="submit" label="Register" />
+                <PrirmaryButton
+                  sx={{ height: "7.8vh" }}
+                  type="submit"
+                  label="Register"
+                />
               )}
             </Box>
           </Box>

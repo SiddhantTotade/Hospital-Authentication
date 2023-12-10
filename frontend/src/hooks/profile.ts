@@ -7,7 +7,7 @@ import { useEffect } from "react";
 export const useProfile = () => {
   const dispatch = useDispatch();
   const { getToken } = useAuth();
-  const res = useGetLoggedInUserQuery(getToken().access);
+  const res = useGetLoggedInUserQuery(getToken()["access"]);
 
   useEffect(() => {
     if (res.data?.first_name) {
