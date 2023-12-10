@@ -39,6 +39,13 @@ function HomePage() {
               justifyItems: "center",
             }}
           >
+            <Typography>
+              {userType === "1"
+                ? "Admin Dashboard"
+                : userType === "2"
+                ? "Doctor Dashboard"
+                : "Patient Dashboard"}
+            </Typography>
             <Box
               sx={{
                 display: "flex",
