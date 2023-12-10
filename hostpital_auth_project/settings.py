@@ -62,7 +62,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
 ]
 
-CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+CORS_ALLOWED_ORIGINS = [env("CORS_ALLOWED_ORIGINS").split(" ")]
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
