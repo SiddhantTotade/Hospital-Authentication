@@ -28,16 +28,16 @@ export const useRequestRegistrationCode = () => {
       if (res.error) {
         setMessage({
           ...message,
-          msg: res.error.data.errors.non_field_errors[0],
+          msg: res.error?.data?.errors?.non_field_errors?.[0],
           error: true,
         });
       } else if (res.data) {
-        setMessage({ ...message, msg: res.data.msg, error: false });
+        setMessage({ ...message, msg: res.data?.msg, error: false });
       }
     } catch (error) {
       setMessage({
         ...message,
-        msg: res.error.data.errors.non_field_errors[0],
+        msg: res.error?.data?.errors?.non_field_errors?.[0],
         error: true,
       });
     } finally {

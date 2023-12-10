@@ -60,14 +60,14 @@ export const useRegisterPatient = () => {
       const newData = { ...data, user_type: 3, profile_pic: image };
       res = await registerUser(newData);
 
-      if ("error" in res) {
+      if (res.error) {
         setMessagePatient({
           ...messagePatient,
-          msg: res.error?.data?.non_field_errors[0],
+          msg: res.error?.data?.non_field_errors?.[0],
           error: true,
         });
       }
-      if ("data" in res) {
+      if (res.data) {
         storeToken(res.data?.token);
         dispatch(
           setUserToken({ access: tokens.access, refresh: tokens.refresh })
@@ -84,7 +84,7 @@ export const useRegisterPatient = () => {
     } catch (error) {
       setMessagePatient({
         ...messagePatient,
-        msg: res.error?.data?.non_field_errors[0] || "An error occured",
+        msg: res.error?.data?.non_field_errors?.[0],
         error: true,
       });
     } finally {

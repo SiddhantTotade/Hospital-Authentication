@@ -36,14 +36,14 @@ export const useLogin = () => {
     try {
       res = await loginUser(data);
 
-      if ("error" in res) {
+      if (res.error) {
         setMessage({
           ...message,
-          msg: res.error?.data?.error?.non_field_errors?.[0],
+          msg: res.error?.data?.errors?.non_field_errors?.[0],
           error: true,
         });
       }
-      if ("data" in res) {
+      if (res.data) {
         storeToken(res.data?.token);
         dispatch(
           setUserToken({ access: tokens.access, refresh: tokens.refresh })
@@ -53,7 +53,7 @@ export const useLogin = () => {
     } catch (error) {
       setMessage({
         ...message,
-        msg: res.error?.data?.errors?.non_field_errors[0],
+        msg: res.error?.data?.errors?.non_field_errors?.[0],
         error: true,
       });
     } finally {
