@@ -75,8 +75,7 @@ class UserRegistrationView(APIView):
 
             relative_link = reverse_lazy("email-verify")
             abs_url = f"https://hospital-authentication.vercel.app/{relative_link}?token={token['access']}"
-            email_body = f"Hi, {
-                user.first_name}. Use the link below to verify your email.\n {abs_url}"
+            email_body = f"Hi, {user.first_name}. Use the link below to verify your email.\n {abs_url}"
             data = {"email_body": email_body, "to_email": user_email,
                     "email_subject": "Verify your email"}
 

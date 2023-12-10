@@ -29,7 +29,7 @@ class User(AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['user_name', 'first_name',
-                       'last_name', 'user_type']
+                       'last_name', 'user_type', 'address', 'city', 'state', 'pincode', 'profile_pic']
 
     def __str__(self):
         return self.email
