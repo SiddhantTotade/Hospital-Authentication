@@ -11,6 +11,7 @@ import { useLogout } from "../hooks/logout";
 import { useProfile } from "../hooks/profile";
 import UserDataTable from "../components/UserDataTable";
 import HomeLayout from "../layouts/HomeLayout";
+import UploadBlog from "../components/UploadBlog";
 
 function HomePage() {
   const { onSubmit, isLoading } = useLogout();
@@ -75,6 +76,7 @@ function HomePage() {
                 <CheckCircleOutlineIcon color="success" />
               )}
             </Typography>
+            <UploadBlog />
             {userType !== "1" ? (
               ""
             ) : (
