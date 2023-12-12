@@ -4,16 +4,12 @@ import { FormControl, CircularProgress } from "@mui/material";
 import PrirmaryButton from "./PrimaryButton";
 import AppDialog from "./AppDialog";
 import InputField from "./Input";
-import { useGetCategoryQuery } from "../services/appApiServices";
-import { useAuth } from "../context/AuthContext";
 import AppAlert from "./Alerts";
 import { useRegisterCategory } from "../hooks/registerCategory";
 
 export default function UploadCategory() {
   const { handleSubmit, isLoading, onSubmit, control, message } =
     useRegisterCategory();
-  const { getToken } = useAuth();
-  const { data } = useGetCategoryQuery(getToken()["access"]);
   const [open, setOpen] = useState(false);
 
   return (

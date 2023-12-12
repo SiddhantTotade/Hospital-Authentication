@@ -6,6 +6,9 @@ import {
   MenuItem,
   FormControl,
   CircularProgress,
+  Checkbox,
+  Typography,
+  Box,
 } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
@@ -26,6 +29,8 @@ export default function UploadBlog() {
     message,
     handleImage,
     handleCategory,
+    handleDraft,
+    draft,
     category,
   } = useRegisterBlog();
   const { getToken } = useAuth();
@@ -43,7 +48,7 @@ export default function UploadBlog() {
           sx={{
             gap: "10px",
             display: open ? "grid" : "none",
-            justifyItems: "center",
+            justifyItems: "start",
             marginTop: "5px",
           }}
         >
@@ -74,6 +79,10 @@ export default function UploadBlog() {
             />
           ))}
           <TextField fullWidth type="file" onChange={handleImage} />
+          <Box sx={{ display: "flex", gap: "10px", alignItems: "center" }}>
+            <Checkbox onClick={handleDraft} checked={draft} />
+            <Typography>Save as Draft</Typography>
+          </Box>
           {isLoading ? (
             <CircularProgress />
           ) : (

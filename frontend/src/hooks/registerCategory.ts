@@ -21,27 +21,16 @@ export const useRegisterCategory = () => {
   const [message, setMessage] = useState({ msg: "", error: false });
   const { getToken } = useAuth();
 
-  const onSubmit = (data: CategoryForm) => {
-    let res: any = {};
-
+  const onSubmit = async (data: CategoryForm) => {
     try {
       const newData = { ...data, access: getToken()["access"] };
-      res = registerCategory(newData);
+      await registerCategory(newData);
 
-      if (res.error) {
-        setMessage({
-          ...message,
-          msg: "Failed to upload category",
-          error: true,
-        });
-      }
-      if (res.data) {
-        setMessage({
-          ...message,
-          msg: "Successfully uploaded category",
-          error: false,
-        });
-      }
+      setMessage({
+        ...message,
+        msg: "Successfully uploaded category",
+        error: false,
+      });
     } catch (error) {
       setMessage({ ...message, msg: "Failed to upload category", error: true });
     } finally {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Box, Typography } from "@mui/material";
+import { Card, Box, Typography, TextField } from "@mui/material";
 
 import { useGetBlogQuery } from "../../services/appApiServices";
 import { useAuth } from "../../context/AuthContext";
@@ -12,6 +12,7 @@ export function Blogs() {
   const { getToken } = useAuth();
   const { data } = useGetBlogQuery(getToken()["access"]);
   const [filteredData, setFilteredData] = useState(data);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleFilterChange = (category) => {
     if (category === "All Categories") {
@@ -20,6 +21,13 @@ export function Blogs() {
       const filteredBlogs = data.filter((blog) => blog.category === category);
       setFilteredData(filteredBlogs);
     }
+  };
+
+  const handleSearch = (searchTerm) => {
+    const filteredBlogs = data.filter((blog) =>
+      blog.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredData(filteredBlogs);
   };
 
   useEffect(() => {
@@ -36,6 +44,17 @@ export function Blogs() {
         }}
       >
         <BlogFilter onFilterChange={handleFilterChange} />
+        <TextField
+          label="Search"
+          variant="outlined"
+          fullWidth
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            handleSearch(e.target.value);
+          }}
+          value={searchTerm}
+          style={{ marginTop: "10px" }}
+        />
       </Box>
       <Box>
         {filteredData?.map((blog, id) => (

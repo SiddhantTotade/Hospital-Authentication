@@ -85,10 +85,12 @@ function HomePage() {
               label="View Blogs"
               onClick={() => navigate("/app/blogs")}
             />
-            <PrirmaryButton
-              label="My Blogs"
-              onClick={() => navigate("/app/my-blogs")}
-            />
+            {userType === "2" && (
+              <PrirmaryButton
+                label="My Blogs"
+                onClick={() => navigate("/app/my-blogs")}
+              />
+            )}
             {userType !== "1" ? (
               ""
             ) : (

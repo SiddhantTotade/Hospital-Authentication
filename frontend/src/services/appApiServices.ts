@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const TESTING_PATH = "http://127.0.0.1:8000/blog/";
+// const TESTING_PATH = "http://127.0.0.1:8000/blog/";
 const REMOTE_PATH = "https://hospital-auththentication-app.onrender.com/auth/";
 
 export const appApi = createApi({
   reducerPath: "userAppAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: TESTING_PATH,
+    baseUrl: REMOTE_PATH,
   }),
   endpoints: (builder) => ({
     registerBlog: builder.mutation({
@@ -79,6 +79,18 @@ export const appApi = createApi({
         };
       },
     }),
+    toggleDraft: builder.mutation({
+      query: (payload) => {
+        return {
+          url: `update-draft/${payload.id}/`,
+          method: "POST",
+          headers: {
+            authorization: `Bearer ${payload.access}`,
+            "Content-type": "application/json",
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -89,4 +101,5 @@ export const {
   useGetCategoryQuery,
   useGetDetailBlogQuery,
   useGetMyBlogQuery,
+  useToggleDraftMutation,
 } = appApi;

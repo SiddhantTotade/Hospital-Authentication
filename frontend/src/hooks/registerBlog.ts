@@ -26,12 +26,17 @@ export const useRegisterBlog = () => {
   const [message, setMessage] = useState({ msg: "", error: false });
   const [uploadBlog, { isLoading }] = useRegisterBlogMutation();
   const [category, setCategory] = useState("");
+  const [draft, setDraft] = useState(false);
   const [image, setImage] = useState("");
   const userData = useSelector((state) => state["user"]);
   const { getToken } = useAuth();
 
   const handleCategory = (e: SelectChangeEvent) => {
     setCategory(e.target.value);
+  };
+
+  const handleDraft = () => {
+    setDraft(!draft);
   };
 
   const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,8 +50,6 @@ export const useRegisterBlog = () => {
   };
 
   const onSubmit = async (data: BlogSchemaForm) => {
-    let res: any = {};
-
     try {
       const newData = {
         ...data,
@@ -57,22 +60,18 @@ export const useRegisterBlog = () => {
         user_first_name: userData.first_name as string,
         access: getToken()["access"],
         blog_slug: data.title + generateSlug(),
+        is_draft: draft,
       };
 
-      res = uploadBlog(newData);
+      await uploadBlog(newData);
 
-      if (res.error) {
-        setMessage({
-          ...message,
-          msg: res.error?.data?.non_field_errors?.[0],
-          error: true,
-        });
-      }
-      if (res.data) {
-        console.log(res.data);
-      }
+      setMessage({
+        ...message,
+        msg: "Blog uploaded successfully",
+        error: false,
+      });
     } catch (error) {
-      setMessage({ ...message, msg: res.error });
+      setMessage({ ...message, msg: "Failed to upload blog", error: true });
     } finally {
       reset();
     }
@@ -86,6 +85,8 @@ export const useRegisterBlog = () => {
     onSubmit,
     handleImage,
     handleCategory,
+    handleDraft,
+    draft,
     category,
   };
 };
