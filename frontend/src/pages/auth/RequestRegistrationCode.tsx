@@ -22,7 +22,7 @@ export default function RequestRegistrationCodePage() {
 
   return (
     <>
-      <AuthLayout title="Reset Password">
+      <AuthLayout title="Request Registration Code">
         <FormControl
           component="form"
           fullWidth

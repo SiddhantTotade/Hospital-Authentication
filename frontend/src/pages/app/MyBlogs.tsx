@@ -76,69 +76,73 @@ export function MyBlogs() {
           />
         </Box>
         <Box>
-          {filteredData?.map((blog, id) => (
-            <Card
-              key={id}
-              sx={{
-                display: "flex",
-                width: "100%",
-                margin: "auto",
-                marginTop: "20px",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: "10px",
-              }}
-            >
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <img
-                  src={blog.image}
-                  style={{ objectFit: "fill" }}
-                  width={300}
-                  height={100}
-                />
-              </Box>
-              <Box>
-                <AppLinks
-                  onClick={() => navigate(`/app/blogs/${blog.blog_slug}`)}
-                >
-                  {blog.title}
-                </AppLinks>
-                <Typography>
-                  {blog.summary.length <= 15
-                    ? blog.summary
-                    : blog.summary.substring(0, 15) + "..."}
-                </Typography>
-              </Box>
-              <Box
+          {filteredData?.length !== 0 ? (
+            filteredData?.map((blog, id) => (
+              <Card
+                key={id}
                 sx={{
                   display: "flex",
-                  justifyContent: "end",
-                  alignItems: "end",
-                  padding: "10px",
+                  width: "100%",
+                  margin: "auto",
+                  marginTop: "20px",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "10px",
                 }}
               >
-                {blog.is_draft ? (
-                  isLoading ? (
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <img
+                    src={blog.image}
+                    style={{ objectFit: "fill" }}
+                    width={300}
+                    height={100}
+                  />
+                </Box>
+                <Box>
+                  <AppLinks
+                    onClick={() => navigate(`/app/blogs/${blog.blog_slug}`)}
+                  >
+                    {blog.title}
+                  </AppLinks>
+                  <Typography>
+                    {blog.summary.length <= 15
+                      ? blog.summary
+                      : blog.summary.substring(0, 15) + "..."}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "end",
+                    alignItems: "end",
+                    padding: "10px",
+                  }}
+                >
+                  {blog.is_draft ? (
+                    isLoading ? (
+                      <CircularProgress />
+                    ) : (
+                      <PrirmaryButton
+                        label="Mark as Draft"
+                        color="success"
+                        onClick={() => onSubmit(blog.id)}
+                      />
+                    )
+                  ) : isLoading ? (
                     <CircularProgress />
                   ) : (
                     <PrirmaryButton
-                      label="Mark as Draft"
-                      color="success"
+                      label="UnMark as Draft"
+                      color="error"
                       onClick={() => onSubmit(blog.id)}
                     />
-                  )
-                ) : isLoading ? (
-                  <CircularProgress />
-                ) : (
-                  <PrirmaryButton
-                    label="UnMark as Draft"
-                    color="error"
-                    onClick={() => onSubmit(blog.id)}
-                  />
-                )}
-              </Box>
-            </Card>
-          ))}
+                  )}
+                </Box>
+              </Card>
+            ))
+          ) : (
+            <Typography>Data not found</Typography>
+          )}
         </Box>
       </Box>
       <AppAlert message={message} />

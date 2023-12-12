@@ -28,7 +28,7 @@ export default function HomeLayout({ title, children }: AuthLayoutProps) {
         },
       }}
     >
-      <Typography fontSize={20}>Hospital Authentication System</Typography>
+      <Typography fontSize={20}>Hospital Blog Application</Typography>
       <Typography fontSize={17}>{title}</Typography>
       {children}
     </Card>

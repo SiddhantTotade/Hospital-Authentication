@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-// const TESTING_PATH = "http://127.0.0.1:8000/blog/";
-const REMOTE_PATH = "https://hospital-auththentication-app.onrender.com/blog/";
+const TESTING_PATH = "http://127.0.0.1:8000/blog/";
+// const REMOTE_PATH = "https://hospital-auththentication-app.onrender.com/blog/";
 
 export const appApi = createApi({
   reducerPath: "userAppAPI",
   baseQuery: fetchBaseQuery({
-    baseUrl: REMOTE_PATH,
+    baseUrl: TESTING_PATH,
   }),
   endpoints: (builder) => ({
     registerBlog: builder.mutation({
