@@ -123,7 +123,7 @@ export function MyBlogs() {
                       <CircularProgress />
                     ) : (
                       <PrirmaryButton
-                        label="Mark as Draft"
+                        label="UnMark as Draft"
                         color="success"
                         onClick={() => onSubmit(blog.id)}
                       />
@@ -132,7 +132,7 @@ export function MyBlogs() {
                     <CircularProgress />
                   ) : (
                     <PrirmaryButton
-                      label="UnMark as Draft"
+                      label="Mark as Draft"
                       color="error"
                       onClick={() => onSubmit(blog.id)}
                     />
