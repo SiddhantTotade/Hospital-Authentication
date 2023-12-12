@@ -59,9 +59,11 @@ export const useRegisterBlog = () => {
         user_email: userData.email as string,
         user_first_name: userData.first_name as string,
         access: getToken()["access"],
-        blog_slug: data.title + generateSlug(),
+        blog_slug: generateSlug(data.title),
         is_draft: draft,
       };
+
+      console.log(newData);
 
       await uploadBlog(newData);
 

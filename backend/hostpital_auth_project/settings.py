@@ -66,6 +66,8 @@ INSTALLED_APPS = [
 
 CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
 
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 1024
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",

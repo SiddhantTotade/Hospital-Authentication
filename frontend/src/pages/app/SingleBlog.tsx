@@ -5,13 +5,13 @@ import { useAuth } from "../../context/AuthContext";
 
 export const SingleBlog = () => {
   const location = useLocation();
-  const match = location.pathname.match(/\/blogs\/([a-zA-Z0-9]+)/);
-  const extractedSlug = match ? match[1] : null;
+  const segments = location.pathname.split("/");
+  const info = segments[segments.length - 1];
   const { getToken } = useAuth();
 
   const getDetailBlog = useGetDetailBlogQuery({
     access: getToken()["access"],
-    slug: extractedSlug,
+    slug: info,
   });
 
   return (

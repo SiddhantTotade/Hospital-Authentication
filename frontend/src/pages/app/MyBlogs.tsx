@@ -45,11 +45,19 @@ export function MyBlogs() {
   }, [data]);
 
   return (
-    <>
-      <Box sx={{ display: "flex", margin: "auto", width: "60%", gap: "30px" }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography variant="h4">My Blogs</Typography>
+      <Box sx={{ display: "flex", margin: "auto", width: "80%", gap: "30px" }}>
         <Box
           sx={{
-            width: "20%",
+            width: "30%",
             marginTop: "20px",
             height: "50vh",
           }}
@@ -134,6 +142,6 @@ export function MyBlogs() {
         </Box>
       </Box>
       <AppAlert message={message} />
-    </>
+    </Box>
   );
 }
