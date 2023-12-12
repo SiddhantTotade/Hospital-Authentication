@@ -52,6 +52,7 @@ INSTALLED_APPS = [
 
     # Installed apps
     "hospital_auth_app",
+    "hospital_blog_app",
 
     # Third party apps
     "rest_framework",
