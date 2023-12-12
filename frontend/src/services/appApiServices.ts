@@ -36,7 +36,7 @@ export const appApi = createApi({
     registerCategory: builder.mutation({
       query: (payload) => {
         return {
-          url: "blogs/",
+          url: "category/",
           method: "POST",
           body: payload,
           headers: {
@@ -57,6 +57,28 @@ export const appApi = createApi({
         };
       },
     }),
+    getDetailBlog: builder.query({
+      query: (payload) => {
+        return {
+          url: `blogs/${payload.slug}`,
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${payload.access}`,
+          },
+        };
+      },
+    }),
+    getMyBlog: builder.query({
+      query: (access) => {
+        return {
+          url: `my-blogs/`,
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${access}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -65,4 +87,6 @@ export const {
   useGetBlogQuery,
   useRegisterCategoryMutation,
   useGetCategoryQuery,
+  useGetDetailBlogQuery,
+  useGetMyBlogQuery,
 } = appApi;

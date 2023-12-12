@@ -44,7 +44,7 @@ export const useRegisterDoctor = () => {
   const handleImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     try {
-      const base64 = await resizeAndConvertToBase64(file);
+      const base64 = await resizeAndConvertToBase64(file, 100, 0.7);
       setImage(base64 as string);
     } catch (error) {
       console.log(error);

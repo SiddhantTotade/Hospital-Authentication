@@ -12,7 +12,6 @@ export const BlogSchema = Yup.object().shape({
   title,
   content,
   summary,
-  category,
 });
 
 export const CategorySchema = Yup.object().shape({

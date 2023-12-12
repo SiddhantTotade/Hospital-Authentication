@@ -12,6 +12,8 @@ import { useProfile } from "../hooks/profile";
 import UserDataTable from "../components/UserDataTable";
 import HomeLayout from "../layouts/HomeLayout";
 import UploadBlog from "../components/UploadBlog";
+import UploadCategory from "../components/UploadCategory";
+import ViewCategory from "../components/ViewCategory";
 
 function HomePage() {
   const { onSubmit, isLoading } = useLogout();
@@ -76,7 +78,17 @@ function HomePage() {
                 <CheckCircleOutlineIcon color="success" />
               )}
             </Typography>
-            <UploadBlog />
+            {userType === "2" && <UploadBlog />}
+            {userType === "1" && <UploadCategory />}
+            {userType === "1" && <ViewCategory />}
+            <PrirmaryButton
+              label="View Blogs"
+              onClick={() => navigate("/app/blogs")}
+            />
+            <PrirmaryButton
+              label="My Blogs"
+              onClick={() => navigate("/app/my-blogs")}
+            />
             {userType !== "1" ? (
               ""
             ) : (

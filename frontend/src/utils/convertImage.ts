@@ -1,4 +1,4 @@
-export const resizeAndConvertToBase64 = (file) => {
+export const resizeAndConvertToBase64 = (file, max_size, quality) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 
@@ -7,7 +7,7 @@ export const resizeAndConvertToBase64 = (file) => {
 
       img.onload = () => {
         const canvas = document.createElement("canvas");
-        const MAX_SIZE = 100; // Set the maximum size in KB
+        const MAX_SIZE = max_size; // Set the maximum size in KB
 
         let width = img.width;
         let height = img.height;
@@ -40,7 +40,7 @@ export const resizeAndConvertToBase64 = (file) => {
             };
           },
           "image/jpeg",
-          0.7
+          quality
         );
       };
 

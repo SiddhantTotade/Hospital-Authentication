@@ -10,7 +10,8 @@ import RequestRegistrationCodePage from "../pages/auth/RequestRegistrationCode";
 import EmailVerificationPage from "../pages/auth/EmailVerification";
 import HomeWithAuth from "../pages/Home";
 import { Blogs } from "../pages/app/Blogs";
-import { UploadBlogs } from "../pages/app/UploadBlogs";
+import { SingleBlog } from "../pages/app/SingleBlog";
+import { MyBlogs } from "../pages/app/MyBlogs";
 
 type Route = RouteObject[] | RouteObject;
 
@@ -43,8 +44,12 @@ const appRoutes = [
     element: <Blogs />,
   },
   {
-    path: "/app/upload/blog",
-    element: <UploadBlogs />,
+    path: "/app/blogs/:url",
+    element: <SingleBlog />,
+  },
+  {
+    path: "/app/my-blogs/",
+    element: <MyBlogs />,
   },
 ];
 

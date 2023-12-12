@@ -7,7 +7,6 @@ import {
   FormControl,
   CircularProgress,
 } from "@mui/material";
-import { SelectChangeEvent } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
 import PrirmaryButton from "./PrimaryButton";
@@ -19,16 +18,23 @@ import { useAuth } from "../context/AuthContext";
 import AppAlert from "./Alerts";
 
 export default function UploadBlog() {
-  const { handleSubmit, isLoading, onSubmit, control, message } =
-    useRegisterBlog();
+  const {
+    handleSubmit,
+    isLoading,
+    onSubmit,
+    control,
+    message,
+    handleImage,
+    handleCategory,
+    category,
+  } = useRegisterBlog();
   const { getToken } = useAuth();
   const { data } = useGetCategoryQuery(getToken()["access"]);
   const [open, setOpen] = useState(false);
-  const [category, setCategory] = useState("");
 
   return (
     <>
-      <PrirmaryButton onClick={() => setOpen(true)} label="Uplaod Blog" />
+      <PrirmaryButton onClick={() => setOpen(true)} label="Upload Blog" />
       <AppDialog title="Upload Blog" open={open} onClose={() => setOpen(false)}>
         <FormControl
           component="form"
@@ -47,9 +53,7 @@ export default function UploadBlog() {
             id="demo-multiple-name"
             fullWidth
             value={category}
-            onChange={(e: SelectChangeEvent) =>
-              setCategory(e.target.value as string)
-            }
+            onChange={handleCategory}
             input={<OutlinedInput label="Select Category" />}
           >
             {data?.map((category, id) => (
@@ -62,14 +66,14 @@ export default function UploadBlog() {
             <InputField
               key={id}
               control={control}
-              name={field}
+              name={field.toLowerCase()}
               multiline
               rows={field === "Content" || field === "Summary" ? 5 : ""}
               label={field}
               type="text"
             />
           ))}
-          <TextField fullWidth type="file" />
+          <TextField fullWidth type="file" onChange={handleImage} />
           {isLoading ? (
             <CircularProgress />
           ) : (

@@ -13,6 +13,7 @@ export const useProfile = () => {
     if (res.data?.first_name) {
       dispatch(
         setUserInfo({
+          id: res.data?.id,
           user_name: res.data?.user_name,
           first_name: res.data?.first_name,
           last_name: res.data?.last_name,
@@ -28,6 +29,7 @@ export const useProfile = () => {
       );
     }
   }, [
+    res.data?.id,
     res.data?.user_name,
     res.data?.first_name,
     res.data?.last_name,
