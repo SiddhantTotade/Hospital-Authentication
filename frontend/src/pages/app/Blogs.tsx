@@ -16,11 +16,9 @@ export function Blogs() {
 
   const handleFilterChange = (category) => {
     if (category === "All Categories") {
-      setFilteredData(data);
+      setFilteredData(data?.filter((blog) => !blog.is_draft));
     } else {
-      const filteredBlogs = data.filter(
-        (blog) => blog.category === category && !blog.is_draft
-      );
+      const filteredBlogs = data.filter((blog) => blog.category === category);
       setFilteredData(filteredBlogs);
     }
   };
