@@ -18,7 +18,9 @@ export function Blogs() {
     if (category === "All Categories") {
       setFilteredData(data);
     } else {
-      const filteredBlogs = data.filter((blog) => blog.category === category);
+      const filteredBlogs = data.filter(
+        (blog) => blog.category === category && !blog.is_draft
+      );
       setFilteredData(filteredBlogs);
     }
   };
