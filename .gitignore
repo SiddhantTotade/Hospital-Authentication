@@ -2,4 +2,5 @@ venv
 .env
 hospital_auth_app/__pycache__
 hospital_auth_app/migrations
+hospital_appointment_app/__pycache__
 hospital_auth_project/__pycache__
