@@ -53,3 +53,21 @@ class DoctorsToken(models.Model):
 
     def __str__(self):
         return self.token
+
+
+class SpecialityOfDoctors(models.Model):
+    speciality = models.CharField(max_length=50, null=True, blank=True)
+
+    def __str__(self) -> str:
+        return self.speciality
+
+
+class DoctorDetail(models.Model):
+    doctor = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
+    speciality = models.OneToOneField(
+        SpecialityOfDoctors, on_delete=models.CASCADE)
+    from_time = models.TimeField()
+    to_time = models.TimeField()
+
+    def __str__(self) -> str:
+        return str(self.doctor)

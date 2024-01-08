@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Installed apps
+    "hospital_appointment_app",
     "hospital_auth_app",
     "hospital_blog_app",
 
@@ -151,6 +152,19 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
+
+TIME_ZONE = 'Asia/Kolkata'
+
+USE_L10N = True
+
+TIME_INPUT_FORMATS = [
+    '%I:%M:%S %p',  # 6:22:44 PM
+    '%I:%M %p',  # 6:22 PM
+    '%I %p',  # 6 PM
+    '%H:%M:%S',     # '14:30:59'
+    '%H:%M:%S.%f',  # '14:30:59.000200'
+    '%H:%M',        # '14:30'
+]
 
 
 # Static files (CSS, JavaScript, Images)

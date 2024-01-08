@@ -1,6 +1,7 @@
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
+from rest_framework import generics
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
@@ -52,16 +53,34 @@ class UserRegistrationView(APIView):
     def post(self, request, format=None):
         try:
             if request.data.get("doctorRegistrationCode"):
-                if DoctorsToken.objects.get(token=request.data.get("doctorRegistrationCode")):
-                    DoctorsToken.objects.get(
-                        token=request.data.get("doctorRegistrationCode")).delete()
-                    serializer = UserRegistrationSerializer(
-                        data=request.data)
+                if DoctorsToken.objects.filter(token=request.data.get("doctorRegistrationCode")).exists():
+                    doctor_token = DoctorsToken.objects.get(
+                        token=request.data.get("doctorRegistrationCode"))
+                    doctor_token.delete()
+
+                    # Create a User instance first
+                    serializer = UserRegistrationSerializer(data=request.data)
+                    serializer.is_valid(raise_exception=True)
+                    user_instance = serializer.save()
+
+                    # Check if the user is a doctor (user_type == "2")
+                    if user_instance.user_type == "2":
+                        # If yes, create associated DoctorDetail
+                        doctor_detail_data = {
+                            'doctor': user_instance.id,
+                            # Add other DoctorDetail fields as needed
+                        }
+                        doctor_detail_serializer = DoctorDetailsSerializer(data=doctor_detail_data)
+                        if doctor_detail_serializer.is_valid():
+                            doctor_detail_serializer.save()
+                        else:
+                            # Handle serializer validation errors appropriately
+                            pass
+
             else:
                 serializer = UserRegistrationSerializer(data=request.data)
-
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
 
             user_data = serializer.data
             user_email = user_data['email']
@@ -74,11 +93,9 @@ class UserRegistrationView(APIView):
             token = get_tokens_for_user(user)
 
             relative_link = reverse_lazy("email-verify")
-            abs_url = f"http://localhost:5173{
-                relative_link}?token={token['access']}"
+            abs_url = f"http://localhost:5173{relative_link}?token={token['access']}"
 
-            email_body = f"Hi, {
-                user.first_name}. Use the link below to verify your email.\n{abs_url}"
+            email_body = f"Hi, {user.first_name}. Use the link below to verify your email.\n{abs_url}"
             data = {"email_body": email_body, "to_email": user_email,
                     "email_subject": "Verify your email"}
 
@@ -154,3 +171,33 @@ class UserProfileView(APIView):
 
         except Exception as e:
             return Response({'error': 'Internal Server Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class AllDoctorsView(generics.ListAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = AllDoctorsSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_authenticated:
+            return DoctorDetail.objects.filter(doctor__user_type=2)
+        return DoctorDetail.objects.none()
+
+
+class SpecialityOfDoctorsView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = SpecialityOfDoctors.objects.all()
+    serializer_class = SpecialityOfDoctorsSerializer
+
+
+class DoctorDetailView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = DoctorDetailsSerializer
+
+    def get_queryset(self):
+        user = self.request.user
+
+        if user.is_authenticated:
+            return DoctorDetail.objects.filter(doctor=user)
+        return DoctorDetail.objects.none()

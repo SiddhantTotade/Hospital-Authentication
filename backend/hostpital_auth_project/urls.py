@@ -23,4 +23,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include("hospital_auth_app.urls")),
     path("blog/", include("hospital_blog_app.urls")),
+    path("api/", include("hospital_appointment_app.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

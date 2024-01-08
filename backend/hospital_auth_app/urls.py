@@ -10,4 +10,10 @@ urlpatterns = [
     path('logout/', TokenBlacklistView.as_view(), name='logout'),
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('email_verify/', VerifyEmailView.as_view(), name='email-verify'),
+    path('speciality/', SpecialityOfDoctorsView.as_view(),
+         name='doctor-speciality'),
+    path('doctor_details/', DoctorDetailView.as_view(),
+         name='doctor-detail'),
+    path('all_doctor/', AllDoctorsView.as_view(),
+         name='doctor-detail'),
 ]
