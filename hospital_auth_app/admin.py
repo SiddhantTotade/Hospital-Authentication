@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, DoctorsToken
+from .models import User, DoctorsToken, SpecialityOfDoctors, DoctorDetail
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 # Register your models here.
 
@@ -24,5 +24,11 @@ class UserAdmin(BaseUserAdmin):
     filter_horizontal = ()
 
 
+class DoctorDetailAdmin(admin.ModelAdmin):
+    list_display = ("id", "__str__")
+
+
 admin.site.register(User, UserAdmin)
 admin.site.register(DoctorsToken)
+admin.site.register(SpecialityOfDoctors)
+admin.site.register(DoctorDetail, DoctorDetailAdmin)

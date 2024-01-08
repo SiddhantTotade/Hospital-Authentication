@@ -14,7 +14,6 @@ from datetime import timedelta
 from pathlib import Path
 
 import os
-import dj_database_url
 import environ
 
 env = environ.Env(
@@ -36,7 +35,9 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = env("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = []
+
+WSGI_APPLICATION = 'hospital_authentication.wsgi.app'
 
 AUTH_USER_MODEL = 'hospital_auth_app.User'
 
@@ -51,9 +52,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 
     # Installed apps
+    "hospital_appointment_app",
     "hospital_auth_app",
     "hospital_blog_app",
-    "hospital_appointment_app",
 
     # Third party apps
     "rest_framework",
@@ -64,8 +65,9 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
 ]
 
-# CORS_ALLOWED_ORIGINS = [env("CORS_ALLOWED_ORIGINS")]
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = ["http://localhost:5173"]
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 1024
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
@@ -103,24 +105,23 @@ WSGI_APPLICATION = "hostpital_auth_project.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
     # "default": {
-    #     "ENGINE": "django.db.backends.mysql",
-    #     "NAME": "hospital_db",
-    #     "USER": "Siddhant",
-    #     "PASSWORD": env("DATABASE_PASSWORD"),
-    #     "HOST": "127.0.0.1",
-    #     "PORT": "3306",
-    #     "OPTIONS": {
-    #         "sql_mode": "traditional",
-    #     }
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": BASE_DIR / "db.sqlite3",
     # }
+    "default": {
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "hospital_db",
+        "USER": "Siddhant",
+        "PASSWORD": env("DATABASE_PASSWORD"),
+        "HOST": "127.0.0.1",
+        "PORT": "3306",
+        "OPTIONS": {
+            "sql_mode": "traditional",
+        }
+    }
 }
 
-DATABASES["default"] = dj_database_url.parse(env("DATABASE_URL"))
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -152,10 +153,22 @@ USE_I18N = True
 
 USE_TZ = True
 
+TIME_ZONE = 'Asia/Kolkata'
+
+USE_L10N = True
+
+TIME_INPUT_FORMATS = [
+    '%I:%M:%S %p',  # 6:22:44 PM
+    '%I:%M %p',  # 6:22 PM
+    '%I %p',  # 6 PM
+    '%H:%M:%S',     # '14:30:59'
+    '%H:%M:%S.%f',  # '14:30:59.000200'
+    '%H:%M',        # '14:30'
+]
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 STATIC_URL = "static/"
 
