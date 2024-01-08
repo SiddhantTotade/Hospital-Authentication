@@ -34,7 +34,7 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [env("ALLOWED_HOSTS")]
 
@@ -105,25 +105,27 @@ WSGI_APPLICATION = "hostpital_auth_project.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    },
-    # "default": {
-    #     "ENGINE": "django.db.backends.mysql",
-    #     "NAME": "hospital_db",
-    #     "USER": "Siddhant",
-    #     "PASSWORD": env("DATABASE_PASSWORD"),
-    #     "HOST": "127.0.0.1",
-    #     "PORT": "3306",
-    #     "OPTIONS": {
-    #         "sql_mode": "traditional",
-    #     }
-    # }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     },
+#     # "default": {
+#     #     "ENGINE": "django.db.backends.mysql",
+#     #     "NAME": "hospital_db",
+#     #     "USER": "Siddhant",
+#     #     "PASSWORD": env("DATABASE_PASSWORD"),
+#     #     "HOST": "127.0.0.1",
+#     #     "PORT": "3306",
+#     #     "OPTIONS": {
+#     #         "sql_mode": "traditional",
+#     #     }
+#     # }
+# }
 
-DATABASES["default"] = dj_database_url.parse(env("DATABASE_URL"))
+DATABASES = {
+    "default": dj_database_url.parse(env("DATABASE_URL"))
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
