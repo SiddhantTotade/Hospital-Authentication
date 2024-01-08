@@ -37,8 +37,7 @@ class DoctorRegistrationCode(APIView):
         token = uuid4()
         DoctorsToken.objects.create(token=token)
 
-        email_body = f"Hi..., Use the code below to register yourself.\nToken - {
-            token}"
+        email_body = f"Hi..., Use the code below to register yourself.\nToken - {token}"
         data = {"email_body": email_body, "to_email": request.data["email"],
                 "email_subject": "Registration Code"}
 
