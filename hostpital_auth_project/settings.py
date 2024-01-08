@@ -66,9 +66,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt.token_blacklist",
 ]
 
-CORS_ALLOWED_ORIGINS = ["https://hospital-authentication.vercel.app"]
-
-CORS_ORIGIN_WHITELIST = (env("CORS_ALLOWED_ORIGINS"), )
+CORS_ALLOW_ALL_ORIGINS = True
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 1024
 
