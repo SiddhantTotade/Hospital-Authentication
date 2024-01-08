@@ -4,5 +4,9 @@
       "src": "/[^.]+",
       "dest": "/"
     }
-  ]
+  ],
+  "env": {
+    "VITE_CLIENT_ID": "614662496180-3kfkatk36dhf1165tq0a3eh6vu8ntvae.apps.googleusercontent.com",
+    "VITE_API_KEY": "AIzaSyBp3SsOMsk-vGW95VIrlK3ymn5xfS9xycg"
+  }
 }
