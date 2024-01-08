@@ -70,6 +70,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 DATA_UPLOAD_MAX_MEMORY_SIZE = 1024 * 1024 * 1024
 
+CLEAR_CACHE_ON_RESTART = True
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
@@ -126,7 +128,7 @@ WSGI_APPLICATION = "hostpital_auth_project.wsgi.application"
 DATABASES = {
     "default": dj_database_url.parse(env("DATABASE_URL"))
 }
-
+print(os.environ.get("DATABASE_URL"))
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
