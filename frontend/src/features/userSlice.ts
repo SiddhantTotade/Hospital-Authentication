@@ -33,6 +33,7 @@ export const userSlice = createSlice({
       state.profile_pic = action.payload.profile_pic;
       state.is_verified = action.payload.is_verified;
       localStorage.setItem("user_type", action.payload.user_type);
+      localStorage.setItem("user_id", action.payload.id);
     },
     unsetUserInfo: (state) => {
       state.id = initialState.id;
@@ -48,6 +49,7 @@ export const userSlice = createSlice({
       state.user_type = initialState.user_type;
       state.is_verified = initialState.is_verified;
       localStorage.removeItem("user_type");
+      localStorage.removeItem("user_id");
     },
   },
 });

@@ -2,19 +2,20 @@ import { useState } from "react";
 
 import PrirmaryButton from "./PrimaryButton";
 import AppDialog from "./AppDialog";
-import { CategoryTable } from "./CategoryTable";
+import { SpecialityTable } from "./SpecialityTable";
 
-export default function ViewCategory() {
+export default function ViewSpeciality() {
   const [open, setOpen] = useState(false);
+
   return (
     <>
-      <PrirmaryButton onClick={() => setOpen(true)} label="View Category" />
+      <PrirmaryButton onClick={() => setOpen(true)} label="View Speciality" />
       <AppDialog
-        title="Blog Category"
+        title="Doctor Speciality"
         open={open}
         onClose={() => setOpen(false)}
       >
-        <CategoryTable />
+        <SpecialityTable />
       </AppDialog>
     </>
   );

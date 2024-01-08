@@ -5,18 +5,21 @@ import PrirmaryButton from "./PrimaryButton";
 import AppDialog from "./AppDialog";
 import InputField from "./Input";
 import AppAlert from "./Alerts";
-import { useRegisterCategory } from "../hooks/registerCategory";
+import { useUploadDoctorSpeciality } from "../hooks/registerSpeciality";
 
-export default function UploadCategory() {
+export default function UploadDoctorSpeciality() {
   const { handleSubmit, isLoading, onSubmit, control, message } =
-    useRegisterCategory();
+    useUploadDoctorSpeciality();
   const [open, setOpen] = useState(false);
 
   return (
     <>
-      <PrirmaryButton onClick={() => setOpen(true)} label="Upload Category" />
+      <PrirmaryButton
+        onClick={() => setOpen(true)}
+        label="Upload Doctor Speciality"
+      />
       <AppDialog
-        title="Upload Category"
+        title="Upload Doctor Speciality"
         open={open}
         onClose={() => setOpen(false)}
       >
@@ -33,8 +36,8 @@ export default function UploadCategory() {
         >
           <InputField
             control={control}
-            name="category"
-            label="Category"
+            name="speciality"
+            label="Speciality"
             type="text"
           />
           {isLoading ? (

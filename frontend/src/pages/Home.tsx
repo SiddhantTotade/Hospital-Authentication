@@ -12,8 +12,11 @@ import { useProfile } from "../hooks/profile";
 import UserDataTable from "../components/UserDataTable";
 import HomeLayout from "../layouts/HomeLayout";
 import UploadBlog from "../components/UploadBlog";
-import UploadCategory from "../components/UploadCategory";
+import UploadBlogCategory from "../components/UploadBlogCategory";
 import ViewCategory from "../components/ViewCategory";
+import UploadDoctorSpeciality from "../components/UploadDoctorSpeciality";
+import ViewSpeciality from "../components/ViewSpeciality";
+import UploadDoctorDetails from "../components/UploadDoctorDetails";
 
 function HomePage() {
   const { onSubmit, isLoading } = useLogout();
@@ -79,12 +82,31 @@ function HomePage() {
               )}
             </Typography>
             {userType === "2" && <UploadBlog />}
-            {userType === "1" && <UploadCategory />}
+            {userType === "2" && <UploadDoctorDetails />}
+            {userType === "1" && <UploadBlogCategory />}
+            {userType === "1" && <UploadDoctorSpeciality />}
             {userType === "1" && <ViewCategory />}
+            {userType === "1" && <ViewSpeciality />}
             <PrirmaryButton
               label="View Blogs"
               onClick={() => navigate("/app/blogs")}
             />
+            {userType === "3" && (
+              <PrirmaryButton
+                label="Set Appointment"
+                onClick={() => navigate("/app/all-doctors")}
+              />
+            )}
+            {(userType === "3" || userType === "2") && (
+              <PrirmaryButton
+                label="My Appointments"
+                onClick={() =>
+                  userType === "3"
+                    ? navigate("/app/my-appointments/patient")
+                    : navigate("/app/my-appointments/doctor")
+                }
+              />
+            )}
             {userType === "2" && (
               <PrirmaryButton
                 label="My Blogs"

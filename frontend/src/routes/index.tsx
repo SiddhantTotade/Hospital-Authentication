@@ -12,6 +12,9 @@ import HomeWithAuth from "../pages/Home";
 import { Blogs } from "../pages/app/Blogs";
 import { SingleBlog } from "../pages/app/SingleBlog";
 import { MyBlogs } from "../pages/app/MyBlogs";
+import { AllDoctors } from "../pages/app/AllDoctors";
+import { ViewAppointmentsPatient } from "../components/ViewAppointmentsPatient";
+import { ViewAppointmentsDoctor } from "../components/ViewAppointmentsDoctor";
 
 type Route = RouteObject[] | RouteObject;
 
@@ -50,6 +53,18 @@ const appRoutes = [
   {
     path: "/app/my-blogs/",
     element: <MyBlogs />,
+  },
+  {
+    path: "/app/all-doctors/",
+    element: <AllDoctors />,
+  },
+  {
+    path: "/app/my-appointments/patient",
+    element: <ViewAppointmentsPatient />,
+  },
+  {
+    path: "/app/my-appointments/doctor",
+    element: <ViewAppointmentsDoctor />,
   },
 ];
 

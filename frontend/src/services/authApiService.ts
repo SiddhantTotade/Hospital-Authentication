@@ -76,6 +76,65 @@ export const authApi = createApi({
         };
       },
     }),
+    uploadSpeciality: builder.mutation({
+      query: (payload) => {
+        return {
+          url: "speciality/",
+          method: "POST",
+          body: payload,
+          headers: {
+            Authorization: `Bearer ${payload.access}`,
+            "Content-type": "application/json",
+          },
+        };
+      },
+    }),
+    getSpeciality: builder.query({
+      query: (payload) => {
+        return {
+          url: "speciality/",
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${payload}`,
+          },
+        };
+      },
+    }),
+    uploadDoctorSpeciality: builder.mutation({
+      query: (payload) => {
+        return {
+          url: "doctor_details/",
+          method: "POST",
+          body: payload,
+          headers: {
+            Authorization: `Bearer ${payload.access}`,
+            "Content-type": "application/json",
+          },
+        };
+      },
+    }),
+    getDoctorDetails: builder.query({
+      query: (payload) => {
+        return {
+          url: "doctor_details/",
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${payload}`,
+          },
+        };
+      },
+    }),
+    getAllDoctors: builder.query({
+      query: (access) => {
+        return {
+          url: "all_doctor/",
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${access}`,
+          },
+        };
+      },
+    }),
   }),
 });
 
@@ -86,4 +145,9 @@ export const {
   useVerifyEmailQuery,
   useRequestRegistrationCodeMutation,
   useLogoutMutation,
+  useGetSpecialityQuery,
+  useUploadSpecialityMutation,
+  useGetDoctorDetailsQuery,
+  useUploadDoctorSpecialityMutation,
+  useGetAllDoctorsQuery,
 } = authApi;
